@@ -3,22 +3,17 @@ package PSGIService::Web::Middleware::Delegate;
 use base 'Plack::Middleware';
 
 our $VERSION = '0.001';
+our $CODE = 404;
 
 use strict;
 use warnings;
-
 use Plack::Util::Accessor 'psgi_app';
-use HTTP::Message::PSGI;
-use HTTP::Response;
-
-our $CODE = 404;
 
 sub call {
   my ($self, $env) = @_;
-  my $http_response = HTTP::Response->from_psgi(
-    my $psgi_response = $self->psgi_app->($env));
+  my $psgi_response = $self->psgi_app->($env);
 
-  return $http_response->code == $CODE ? 
+  return $psgi_response->[0] == $CODE ? 
     $self->app->($env) : $psgi_response;
 }
 

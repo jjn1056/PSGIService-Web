@@ -15,12 +15,12 @@ sub render_now { encode_json {now => scalar(localtime)} }
 
 sub dispatch_request {
   my $self = shift;
-  sub (GET + /websimple-hello) {
+  sub (/websimple-hello) {
     [ 200, [ 'Content-type', 'text/html' ],
       [$self->render_hello]
     ],
   },
-  sub (GET + /now) {
+  sub (/now) {
     [ 200, [ 'Content-type', 'application/json' ],
       [$self->render_now],
     ]  
