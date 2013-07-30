@@ -1,0 +1,55 @@
+# NAME
+
+PSGIService - A demo application
+
+# DESCRIPTION
+
+Demonstration of using the [PSGI](http://search.cpan.org/perldoc?PSGI) protocol to refactor application functionality
+in two ways.  One, to show how to use middleware to bypass [Catalyst](http://search.cpan.org/perldoc?Catalyst) for
+speed purposes and two, show how to wrap a PSGI service in a [Catalyst::Model](http://search.cpan.org/perldoc?Catalyst::Model).
+
+In both cases we could use the PSGI protocol to create standalone web services
+that can interoperation with Catalyst if desired, but yet do not require stand
+alone serving (can run in the same process as the main application.)  Yet later,
+we can very easily break out those services and run them independently, should
+that be desired.
+
+Sample application is only a sketch, it does not account for or take advantage
+of any asynchronous, evented logic.
+
+This application exposes four http endpoints, two handled by [Catalyst](http://search.cpan.org/perldoc?Catalyst) and
+two by [Web::Simple](http://search.cpan.org/perldoc?Web::Simple).
+
+    /catalyst-hello
+    /websimple-hello
+    /catalyst-now
+    /now
+
+The first two are simple template drive hello world style pages.  It demos how
+to use middleware to intercept the request from [Catalyst](http://search.cpan.org/perldoc?Catalyst), but also lets you
+inform the intercepting application from [Catalyst](http://search.cpan.org/perldoc?Catalyst)
+
+The third is a web page which displays the current time, as retrieved from a
+JSON web service driven by [Web::Simple](http://search.cpan.org/perldoc?Web::Simple), and the forth is the underlying
+JSON service.
+
+Even though two applications are running, we only need one server, since all
+communication is done via the PSGI protocol.  It would be easy to convert this
+application to run with the web service on a separate server.
+
+# SEE ALSO
+
+The following modules or resources may be of interest.
+
+[Catalyst::Runtime](http://search.cpan.org/perldoc?Catalyst::Runtime), [Plack](http://search.cpan.org/perldoc?Plack)
+
+# AUTHOR
+
+    John Napiorkowski C<< <jjnapiork@cpan.org> >>
+
+# COPYRIGHT & LICENSE
+
+    Copyright 2013, John Napiorkowski C<< <jjnapiork@cpan.org> >>
+
+This program is owned by John Napiorkowski and contributors as noted or
+otherwise described in external documention or legal agreements.
